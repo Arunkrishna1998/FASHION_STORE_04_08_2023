@@ -1,5 +1,4 @@
 from django.urls import path,include
-
 from . import views
 
 urlpatterns = [
@@ -143,7 +142,8 @@ urlpatterns = [
 	path('search-category', views.admin_category_search,
 		 name='admin_category_search'),
 
-
-
-
 ]
+
+
+# handler500 = 'store.views.handler500'
+# handler400 = 'views.handler400'

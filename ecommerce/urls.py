@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-
+from store.views import handler404 as store_handler400
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler500 = 'store.views.handler500'
+handler400 = store_handler400

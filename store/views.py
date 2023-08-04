@@ -31,7 +31,6 @@ def product_details(request, product_id):
 
 
 def size_list(request):
-    print("*************Calling Size*************")
     color_id = request.GET['color_id']
     size_list = SizeVariant.objects.filter(Color_id=color_id)
     context = {'size_list':size_list}
@@ -58,6 +57,10 @@ def register(request):
         last_name = request.POST['last_name']
         email = request.POST['email']
         contact = request.POST['contact']
+        if User.objects.filter(username=email).exists():
+            messages.error(request, 'User With Email Already Exists')
+            return render(request, 'user/register_1.html')
+
 
         password = str(random.randint(111111, 999999))
         user = User.objects.create_user(username=email,email=email,first_name=first_name,last_name=last_name,password=password)
@@ -2043,3 +2046,14 @@ def user_notifications_delete(request,not_id):
     messages.info(request, 'Successfully Deleted')
     return redirect('user_notifications_view')
 
+
+def handler500(request):
+    response = render(request, '500error.html')
+    response.status_code = 500
+    return response
+
+from django.template import RequestContext
+def handler404(request, exception):
+    response = render(request,'404.html')
+    response.status_code = 404
+    return response
